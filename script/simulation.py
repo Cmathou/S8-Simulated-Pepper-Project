@@ -16,6 +16,8 @@ def main():
 
     pybullet.setAdditionalSearchPath(pybullet_data.getDataPath())
     pepper.subscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM)
+    pybullet.setGravity(0, 0, -9.81)
+    pybullet.setRealTimeSimulation(1)
     
     elements = [["table/table.urdf", [1, -1, 0], 1]]
     
@@ -27,7 +29,8 @@ def main():
             physicsClientId=client)
 
     pepper.moveTo(1, 0, -3.14/2, _async=True)
-
+    time.sleep(6)
+    
     while True:
         img = pepper.getCameraFrame()
         cv2.imshow("bottom camera", img)
