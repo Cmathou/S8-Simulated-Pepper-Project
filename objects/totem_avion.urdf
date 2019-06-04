@@ -81,12 +81,12 @@
       <contact_erp value="1.0"/>
     </contact>
     <inertial>
-      <origin rpy="1.57 0 0" xyz="0.0 0.02 0.0"/>
+      <origin rpy="0 0 0" xyz="0.0 0.02 0.0"/>
        <mass value=".001"/>
        <inertia ixx="1e-9" ixy="0" ixz="0" iyy="1e-9" iyz="0" izz="1e-9"/>
     </inertial>
     <visual>
-      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="Totem_avion/avion.obj" scale=".00005 .00005 .00005"/>
       </geometry>
@@ -95,7 +95,7 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
 	 	<mesh filename="Totem_avion/avion.obj" scale=".00005 .00005 .00005"/>
       </geometry>
