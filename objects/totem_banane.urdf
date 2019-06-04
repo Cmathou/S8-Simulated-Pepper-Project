@@ -88,7 +88,7 @@
     <visual>
       <origin rpy="1.57 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="Totem_banane/banane.obj" scale=".00005 .00005 .00005"/>
+        <mesh filename="Totem_banane/banane.obj" scale=".01 .01 .01"/>
       </geometry>
        <material name="yellow">
         <color rgba="0.9 0.6 0 1"/>
@@ -97,7 +97,7 @@
     <collision>
       <origin rpy="1.57 0 0" xyz="0 0 0"/>
       <geometry>
-	 	<mesh filename="Totem_banane/banane.obj" scale=".00005 .00005 .00005"/>
+	 	<mesh filename="Totem_banane/banane.obj" scale=".03 .03 .03"/>
       </geometry>
     </collision>
   </link>
