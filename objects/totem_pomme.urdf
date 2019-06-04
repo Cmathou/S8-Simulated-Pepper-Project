@@ -88,7 +88,7 @@
     <visual>
       <origin rpy="1.57 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="Totem_pomme/pomme.obj" scale=".00005 .00005 .00005"/>
+        <mesh filename="Totem_pomme/pomme.obj" scale=".0003 .0003 .0003"/>
       </geometry>
        <material name="yellow">
         <color rgba="0.9 0.6 0 1"/>
