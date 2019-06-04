@@ -7,6 +7,7 @@ import pybullet
 import pybullet_data
 from qibullet import PepperVirtual
 from qibullet import SimulationManager
+from qibullet import Camera
 import pepper_kinematics as pk
 from detection import detection
 
@@ -17,9 +18,9 @@ def main():
     simulation_manager = SimulationManager()
     client = simulation_manager.launchSimulation(gui=True)
     pepper = simulation_manager.spawnPepper(client, spawn_ground_plane=True)
-
+    
     pybullet.setAdditionalSearchPath(pybullet_data.getDataPath())
-    pepper.subscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM)
+    pepper.subscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM, Camera.K_720p )
     pybullet.setGravity(0, 0, -9.81)
     pybullet.setRealTimeSimulation(1)
 
@@ -43,6 +44,7 @@ def main():
     time.sleep(50)
     img = pepper.getCameraFrame()
     cv2.imwrite(path, img)
+    pepper.unsubscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM) 	
     print "photo prise"
     
     obj = detection()
