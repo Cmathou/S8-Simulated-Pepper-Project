@@ -39,14 +39,15 @@ def main():
             globalScaling=e[3],
             physicsClientId=client)
 
-    pepper.moveTo(1, -0.2, -3.14/2, _async=True)
     pepper.setAngles('HeadPitch', -0.34, 1.0)
-    time.sleep(50)
+    pepper.moveTo(1, -0.2, -3.14/2)
     img = pepper.getCameraFrame()
     cv2.imwrite(path, img)
     pepper.unsubscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM) 	
     print "photo prise"
     
+    pepper.moveTo(0.2, 0, 0)
+
     obj = detection()
     result = obj.detect(path)
     print "------------------"
@@ -65,18 +66,16 @@ def main():
     current_position, current_orientation = pk.left_arm_get_position(current_angles)
     
     target_position = current_position
+    target_position[0] = target_position[0] + 0.05
+    target_position[1] = target_position[1] + 0.03
+    target_position[2] = target_position[2]
     target_orientation = current_orientation # This is not supported yet
 
-
     target_angles = pk.left_arm_set_position(current_angles, target_position, target_orientation)
-    if target_angles.any():
+    if target_angles:
         pepper.setAngles(pk.left_arm_tags, target_angles.tolist(), 1.0)
-
-    while True:
-        img = pepper.getCameraFrame()
-        cv2.imshow("bottom camera", img)
-        cv2.waitKey(1)
-
+    while(1):
+        pass
 
 if __name__ == "__main__":
 	main()
