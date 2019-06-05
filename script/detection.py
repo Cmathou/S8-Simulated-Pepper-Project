@@ -13,7 +13,7 @@ class detection:
         input = {
           "image": imfile,
           "output": "data://.algo/deeplearning/ObjectDetectionCOCO/temp/detection.png",
-          "min_score": 0.7,
+          "min_score": 0.5,
           "model": "ssd_mobilenet_v1"
         }
 
