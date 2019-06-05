@@ -88,13 +88,13 @@
     <visual>
       <origin rpy="1.57 0 0" xyz="0 0 0.1"/>
       <geometry>
-        <mesh filename="Totem_pomme/raquette.obj" scale=".003 .003 .003"/>
+        <mesh filename="Totem_raquette/raquette.obj" scale=".003 .003 .003"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0.02"/>
       <geometry>
-	 	<mesh filename="Totem_pomme/raquette.obj" scale=".008 .008 .008"/>
+	 	<mesh filename="Totem_raquette/raquette.obj" scale=".008 .008 .008"/>
       </geometry>
     </collision>
   </link>
