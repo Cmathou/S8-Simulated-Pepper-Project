@@ -30,7 +30,7 @@ def main():
 
     elements = [["table/table.urdf", [1, -1, 0], [0, 0, 0], 1], ["../objects/totem_avion.urdf", [1, -0.8, 0.65], [0, 0, 1.57], 1],
                ["../objects/totem_banane.urdf", [1.2, -0.8, 0.65], [0, 0, 0], 1], ["../objects/totem_pomme.urdf", [0.8, -0.8, 0.65], [0, 0, 0], 1]]
-    
+    print pk.left_arm_tags
     for e in elements:
         pybullet.loadURDF(
             e[0],
@@ -60,9 +60,9 @@ def main():
     '''
     
     pepper.setAngles('LHand', 1, 1.0)
+    pepper.setAngles('LWristYaw', 0.17, 1.0)
 
     current_angles = pepper.getAnglesPosition(pk.left_arm_tags)
-    current_angles[4] = 0.17
     current_position, current_orientation = pk.left_arm_get_position(current_angles)
     
     target_position = current_position
