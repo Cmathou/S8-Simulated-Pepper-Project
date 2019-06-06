@@ -12,7 +12,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-		<mesh filename="boite/Boite2.obj" scale=".03 .03 .03"/>
+		<mesh filename="boite/box2.obj" scale=".03 .03 .03"/>
       </geometry>
        <material name="white">
         <color rgba="1 0.8 0.6 1"/>
