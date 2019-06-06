@@ -1,0 +1,11 @@
+topic: ~simpled()
+language: enu
+
+u:([Go e:SimpleWeb/Start]) $SimpleWeb/Page0="What do you want me to do ?" $SimpleWeb/Page1=1
+
+    u1:([Red e:SimpleWeb/Button1]) $SimpleWeb/Page0="Alright I'm bringing you the banana" Banana, Good choice !
+
+    u1:([Blue e:SimpleWeb/Button2]) $SimpleWeb/Page0="Alright I'm bringing you the plane" Plane, I like it 
+
+    u1:([Yellow e:SimpleWeb/Button3]) $SimpleWeb/Page0="Alright I'm bringing you the tennis racket" Tennis racket, Why not !
+
