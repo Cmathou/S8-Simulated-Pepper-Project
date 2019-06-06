@@ -17,7 +17,8 @@ def main():
     
     simulation_manager = SimulationManager()
     client = simulation_manager.launchSimulation(gui=True)
-    pepper = simulation_manager.spawnPepper(client, spawn_ground_plane=False)
+)
+    pepper = simulation_manager.spawnPepper(client)
     
     pybullet.setAdditionalSearchPath(pybullet_data.getDataPath())
     pepper.subscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM, Camera.K_720p )
@@ -28,8 +29,8 @@ def main():
     pepper.setAngles(pk.right_arm_tags, pk.right_arm_initial_pose, 1.0)
     time.sleep(1.0)
 
-    elements = [["table/table.urdf", [1, -1, 0], [0, 0, 0], 1], ["../objects/totem_avion.urdf", [1, -0.75, 0.65], [0, 0, 1.57], 1],
-               ["../objects/totem_banane.urdf", [1.18, -0.75, 0.65], [0, 0, 0], 1], ["../objects/totem_raquette.urdf", [0.82, -0.75, 0.65], [0, 0, 0], 1],
+    elements = [["../objects/plane/plane.urdf", [0, 0, 0], [0, 0, 0], 1],["table/table.urdf", [1, -1, 0], [0, 0, 0], 1], 
+		["../objects/totem_avion.urdf", [1, -0.75, 0.65], [0, 0, 1.57], 1],["../objects/totem_raquette.urdf", [0.82, -0.75, 0.65], [0, 0, 0], 1],
 		["../objects/boite/box2.urdf", [-1, 0, 0], [0, 0, 1.57], 1], ["../objects/boite/boite.urdf", [1, 2, -0.5], [0, 0, 0], 1],
  	       ["../objects/boite/box3.urdf", [3, 0, 0], [0, 0, 0], 1]]
     
