@@ -44,32 +44,43 @@ $(document).ready(function () {
         });
     }
 
-	$('#footer_start').on('click', function() {
+    $('#footer_start').on('click', function() {
         console.log("click Start");
         raise('SimpleWeb/Start', 1)
     });
 
     $('#choice_1_1').on('click', function() {
         console.log("click 1");
-        raise('SimpleWeb/Button1', 1)
-	$item=1
+        raise('SimpleWeb/Button1', 1);
+	$item=123
     });
 
     $('#choice_1_2').on('click', function() {
         console.log("click 2");
-        raise('SimpleWeb/Button2', 1)
-	$item=2
+        raise('SimpleWeb/Button2', 1);
+	$item=132
     });
 
     $('#choice_1_3').on('click', function() {
         console.log("click 3");
-        raise('SimpleWeb/Button3', 1)
+        raise('SimpleWeb/Button3', 1);
 	$item=3
     });
     $('#choice_1_4').on('click', function() {
         console.log("click 4");
-        raise('SimpleWeb/Button4', 1)
+        raise('SimpleWeb/Button4', 1);
 	$item=4
     });
+    $('#choice_1_5').on('click', function() {
+        console.log("click 5");
+        raise('SimpleWeb/Button5', 1);
+	$item=5
+    });
+    $('#choice_1_6').on('click', function() {
+        console.log("click 6");
+        raise('SimpleWeb/Button6', 1);
+	$item=6
+    });
+
 
 });
