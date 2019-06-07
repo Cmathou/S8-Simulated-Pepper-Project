@@ -2,6 +2,8 @@
 # coding: utf-8
 
 import time
+import argparse
+import qi
 import cv2
 import pybullet
 import pybullet_data
@@ -26,12 +28,19 @@ def arm_pos(pepper, x, y, z, s):
     if target_angles.any():
         pepper.setAngles(pk.left_arm_tags, target_angles.tolist(), s)
 
-def main():
+def main(session):
     path = '../images/detection.png'
     
     simulation_manager = SimulationManager()
     client = simulation_manager.launchSimulation(gui=True)
     pepper = simulation_manager.spawnPepper(client, spawn_ground_plane=True)
+    '''
+    ALMemory = session.service("ALMemory")
+    ALMemory.declareEvent('item')
+    while(1):
+        print ALMemory.getData('item')
+        time.sleep(2)
+    '''
     
     pybullet.setAdditionalSearchPath(pybullet_data.getDataPath())
     pepper.subscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM, Camera.K_720p )
@@ -42,7 +51,8 @@ def main():
     #pepper.setAngles(pk.right_arm_tags, pk.right_arm_initial_pose, 1.0)
     pepper.setAngles('RShoulderPitch', 3.14/2, 1.0)
     time.sleep(1.0)
-
+    
+    config = [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
     elements = [["table/table.urdf", [1, -1, 0], [0, 0, 0], 1], ["../objects/totem_avion.urdf", [1, -0.65, 0.65], [0, 0, 1.57], 1],
                ["../objects/totem_banane.urdf", [1.18, -0.65, 0.65], [0, 0, 0], 1], ["../objects/totem_raquette.urdf", [0.82, -0.65, 0.65], [0, 0, 0], 1]]
 
@@ -55,7 +65,7 @@ def main():
             physicsClientId=client)
 
     pepper.setAngles('HeadPitch', -0.34, 1.0)
-    pepper.moveTo(0.82, -0.15, -3.14/2)
+    pepper.moveTo(1, -0.15, -3.14/2)
 
     
     img = pepper.getCameraFrame()
@@ -91,4 +101,18 @@ def main():
         pass
 
 if __name__ == "__main__":
-	main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ip", type=str, default="127.0.0.1",
+                        help="Robot IP address. On robot or Local Naoqi: use '127.0.0.1'.")
+    parser.add_argument("--port", type=int, default=9559,
+                        help="Naoqi port number")
+
+    args = parser.parse_args()
+    session = qi.Session()
+    try:
+        session.connect("tcp://" + args.ip + ":" + str(args.port))
+    except RuntimeError:
+        print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
+               "Please check your script arguments. Run with -h option for help.")
+        sys.exit(1)
+    main(session)
