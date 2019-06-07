@@ -33,6 +33,7 @@ def main():
 ["../objects/totem_avion.urdf", [1, -0.75, 0.65], [0, 0, 1.57], 1],["../objects/totem_raquette.urdf", [0.82, -0.75, 0.65], [0, 0, 0], 1],
 ["../objects/boite/box2.urdf", [-1, 0, 0], [0, 0, 1.57], 1], ["../objects/boite/boite.urdf", [1, 2, -0.5], [0, 0, 0], 1],
 ["../objects/boite/box3.urdf", [3, 0, 0.1], [0, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-1, 6, 0.1], [1.57, 0, 0], 1],
+["../objects/decor/mouton/mouton.urdf", [3, -2, 0], [0, 0, 1.57], 1],
 ["../objects/decor/arbre/arbres.urdf", [-3, 0, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-5, 2, 0.1], [1.57, 0, 0], 1],
 ["../objects/decor/arbre/arbres.urdf", [-3, 5, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-2, 4, 0.1], [1.57, 0, 0], 1],
 ["../objects/decor/arbre/arbres.urdf", [-5, -1, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [3, 3, 0.1], [1.57, 0, 0], 1],
