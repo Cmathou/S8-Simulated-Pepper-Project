@@ -1,13 +1,16 @@
 topic: ~simpled()
 language: enu
 
-u:([Go e:SimpleWeb/Start]) $SimpleWeb/Page0="What do you want me to do ?" $SimpleWeb/Page1=1
+u:([Go e:SimpleWeb/Start]) $SimpleWeb/Page0="Choose your configuration B banana, P:plane, R:racket, 1:box1, 2:box2, 3:box3; Example: B1 P2 R3 means banana in box1, plane in box2, racket in box3" $SimpleWeb/Page1=1
 
-    u1:([Red e:SimpleWeb/Button1]) $SimpleWeb/Page0="Alright I'm bringing you the banana" Banana, Good choice !
+    u1:([1 e:SimpleWeb/Button1]) $SimpleWeb/Page0="Let's sort with configuration n°1" Configuration 1 ready ! $item=1
 
-    u1:([Blue e:SimpleWeb/Button2]) $SimpleWeb/Page0="Alright I'm bringing you the plane" Plane, I like it 
+    u1:([2 e:SimpleWeb/Button2]) $SimpleWeb/Page0="Let's sort with configuration n°2" Configuration 2 ready ! $item=2
 
-    u1:([Yellow e:SimpleWeb/Button3]) $SimpleWeb/Page0="Alright I'm bringing you the tennis racket" Tennis racket, Why not !
+    u1:([3 e:SimpleWeb/Button3]) $SimpleWeb/Page0="Let's sort with configuration n°3" Configuration 3 ready ! $item=3
 
-    u1:([Yellow e:SimpleWeb/Button4]) $SimpleWeb/Page0="Alright I'm just sorting items" Let's sort this !
+    u1:([4 e:SimpleWeb/Button4]) $SimpleWeb/Page0="Let's sort with configuration n°4" Configuration 4 ready ! $item=4
 
+    u1:([5 e:SimpleWeb/Button5]) $SimpleWeb/Page0="Let's sort with configuration n°5" Configuration 5 ready ! $item=5
+
+    u1:([6 e:SimpleWeb/Button6]) $SimpleWeb/Page0="Let's sort with configuration n°6" Configuration 6 ready ! $item=6
