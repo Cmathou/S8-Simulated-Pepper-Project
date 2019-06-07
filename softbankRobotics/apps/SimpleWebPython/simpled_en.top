@@ -9,3 +9,5 @@ u:([Go e:SimpleWeb/Start]) $SimpleWeb/Page0="What do you want me to do ?" $Simpl
 
     u1:([Yellow e:SimpleWeb/Button3]) $SimpleWeb/Page0="Alright I'm bringing you the tennis racket" Tennis racket, Why not !
 
+    u1:([Yellow e:SimpleWeb/Button4]) $SimpleWeb/Page0="Alright I'm just sorting items" Let's sort this !
+
