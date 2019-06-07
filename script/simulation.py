@@ -12,6 +12,20 @@ import pepper_kinematics as pk
 from detection import detection
 
 
+def arm_pos(pepper, x, y, z, s):
+    current_angles = pepper.getAnglesPosition(pk.left_arm_tags)
+    current_position, current_orientation = pk.left_arm_get_position(current_angles)
+    
+    target_position = current_position
+    target_position[0] = target_position[0] + x
+    target_position[1] = target_position[1] + y
+    target_position[2] = target_position[2] + z
+    target_orientation = current_orientation # This is not supported yet
+
+    target_angles = pk.left_arm_set_position(current_angles, target_position, target_orientation)
+    if target_angles.any():
+        pepper.setAngles(pk.left_arm_tags, target_angles.tolist(), s)
+
 def main():
     path = '../images/detection.png'
     
@@ -25,11 +39,12 @@ def main():
     pybullet.setRealTimeSimulation(1)
 
     pepper.setAngles(pk.left_arm_tags, pk.left_arm_work_pose, 1.0)
-    pepper.setAngles(pk.right_arm_tags, pk.right_arm_initial_pose, 1.0)
+    #pepper.setAngles(pk.right_arm_tags, pk.right_arm_initial_pose, 1.0)
+    pepper.setAngles('RShoulderPitch', 3.14/2, 1.0)
     time.sleep(1.0)
 
-    elements = [["table/table.urdf", [1, -1, 0], [0, 0, 0], 1], ["../objects/totem_avion.urdf", [1, -0.70, 0.65], [0, 0, 1.57], 1],
-               ["../objects/totem_banane.urdf", [1.18, -0.70, 0.65], [0, 0, 0], 1], ["../objects/totem_raquette.urdf", [0.82, -0.70, 0.65], [0, 0, 0], 1]]
+    elements = [["table/table.urdf", [1, -1, 0], [0, 0, 0], 1], ["../objects/totem_avion.urdf", [1, -0.65, 0.65], [0, 0, 1.57], 1],
+               ["../objects/totem_banane.urdf", [1.18, -0.65, 0.65], [0, 0, 0], 1], ["../objects/totem_raquette.urdf", [0.82, -0.65, 0.65], [0, 0, 0], 1]]
 
     for e in elements:
         pybullet.loadURDF(
@@ -40,9 +55,9 @@ def main():
             physicsClientId=client)
 
     pepper.setAngles('HeadPitch', -0.34, 1.0)
-    pepper.moveTo(1, -0.2, -3.14/2)
+    pepper.moveTo(0.82, -0.15, -3.14/2)
 
-    """
+    
     img = pepper.getCameraFrame()
     cv2.imwrite(path, img)
     pepper.unsubscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM) 	
@@ -51,43 +66,27 @@ def main():
     result = obj.detect(path)
     print "------------------"
     print result
-    """
+    
     '''
     for name in pepper.joint_dict.items():
         print(name)
     '''
     
-
-    current_angles = pepper.getAnglesPosition(pk.left_arm_tags)
-    current_position, current_orientation = pk.left_arm_get_position(current_angles)
+    arm_pos(pepper, -0.10, 0.04, -0.08, 1.0)
     
-    target_position = current_position
-    target_position[0] = target_position[0] - 0.10
-    target_position[1] = target_position[1] + 0.05
-    target_position[2] = target_position[2] - 0.10
-    target_orientation = current_orientation # This is not supported yet
-
-    target_angles = pk.left_arm_set_position(current_angles, target_position, target_orientation)
-    if target_angles.any():
-        pepper.setAngles(pk.left_arm_tags, target_angles.tolist(), 1.0)
     
     pepper.setAngles('LHand', 1, 1.0)
     pepper.setAngles('LWristYaw', 0.10, 1.0)
-    pepper.moveTo(0.17, 0, 0)
+    pepper.moveTo(0.21, 0, 0)
 
-    current_angles = pepper.getAnglesPosition(pk.left_arm_tags)
-    current_position, current_orientation = pk.left_arm_get_position(current_angles)
+    arm_pos(pepper, 0.11, 0, 0, 0.5)
     
-    target_position = current_position
-    target_position[0] = target_position[0] + 0.10
-    target_position[1] = target_position[1] 
-    target_position[2] = target_position[2] 
-    target_orientation = current_orientation # This is not supported yet
+    time.sleep(5)
+    pepper.setAngles('LHand', 0, 0.5)
+    time.sleep(1)
 
-    target_angles = pk.left_arm_set_position(current_angles, target_position, target_orientation)
-    if target_angles.any():
-        pepper.setAngles(pk.left_arm_tags, target_angles.tolist(), 1.0)
-
+    arm_pos(pepper, 0, 0, 0.05, 1.0)
+    
     while(1):
         pass
 
