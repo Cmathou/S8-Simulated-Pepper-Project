@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     // session = new QiSession("127.0.0.1:80");
 
     //  use qimessaging-json directly 
@@ -68,7 +68,7 @@
     });
     $('#choice_1_4').on('click', function() {
         console.log("click 4");
-        raise('SimpleWeb/Button1', 1)
+        raise('SimpleWeb/Button4', 1)
 	$item=4
     });
 
