@@ -1,7 +1,7 @@
 topic: ~simpled()
 language: enu
 
-u:([Go e:SimpleWeb/Start]) $SimpleWeb/Page0="Choose your configuration B banana, P:plane, R:racket, 1:box1, 2:box2, 3:box3; Example: B1 P2 R3 means banana in box1, plane in box2, racket in box3" $SimpleWeb/Page1=1
+u:([Go e:SimpleWeb/Start]) $SimpleWeb/Page0="Choose your configuration" $SimpleWeb/Page1=1
 
     u1:([1 e:SimpleWeb/Button1]) $SimpleWeb/Page0="Let's sort with configuration n°1" Configuration 1 ready ! $item=1
 
