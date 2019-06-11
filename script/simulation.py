@@ -108,21 +108,12 @@ def arm_pos(pepper, x, y, z, s):
     if target_angles.any():
         pepper.setAngles(pk.left_arm_tags, target_angles.tolist(), s)
 
-def main():
+def main(session):
     path = '../images/detection.png'
     
     simulation_manager = SimulationManager()
     client = simulation_manager.launchSimulation(gui=True)
     pepper = simulation_manager.spawnPepper(client, spawn_ground_plane=True)
-    '''
-    ALMemory = session.service("ALMemory")
-    ALMemory.declareEvent('item')
-    while(ALMemory.getData('item') == None):
-        pass
-    k = ALMemory.getData('item')
-    '''
-
-    k = 5
     
     pybullet.setAdditionalSearchPath(pybullet_data.getDataPath())
     pepper.subscribeCamera(PepperVirtual.ID_CAMERA_BOTTOM, Camera.K_720p )
@@ -155,6 +146,13 @@ def main():
     pepper.setAngles('HeadPitch', -0.34, 1.0)
     pepper.moveTo(1, -0.15, -3.14/2)
 
+    print "en attente d'instruction"
+    ALMemory = session.service("ALMemory")
+    ALMemory.declareEvent('item')
+    while(ALMemory.getData('item') == None):
+        pass
+    k = int(ALMemory.getData('item'))
+
     
     img = pepper.getCameraFrame()
     cv2.imwrite(path, img)
@@ -183,7 +181,6 @@ def main():
         pass
 
 if __name__ == "__main__": 
-    '''
     parser = argparse.ArgumentParser()
     parser.add_argument("--ip", type=str, default="127.0.0.1",
                         help="Robot IP address. On robot or Local Naoqi: use '127.0.0.1'.")
@@ -198,7 +195,5 @@ if __name__ == "__main__":
         print ("Can't connect to Naoqi at ip \"" + args.ip + "\" on port " + str(args.port) +".\n"
                "Please check your script arguments. Run with -h option for help.")
         sys.exit(1)
-   '''
-   # main(session)
-    main()
+    main(session)
     
