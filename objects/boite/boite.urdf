@@ -19,9 +19,9 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.2"/>
       <geometry>
-	 	<mesh filename="boite/Boite1.obj" scale=".02 .02 .02"/>
+	 	<mesh filename="boite/Boite1.obj" scale=".01 .01 .01"/>
       </geometry>
     </collision>
   </link>
