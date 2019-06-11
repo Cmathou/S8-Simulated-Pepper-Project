@@ -31,18 +31,20 @@ def main():
 
     elements = [["../objects/plane/plane.urdf", [0, 0, 0], [0, 0, 0], 1],["table/table.urdf", [1, -1, 0], [0, 0, 0], 1], 
 ["../objects/totem_incendie.urdf", [1, -0.75, 0.65], [0, 0, 1.57], 1],["../objects/totem_raquette.urdf", [0.82, -0.75, 0.65], [0, 0, 0], 1],
-["../objects/totem_banane.urdf", [1.18, -0.75, 0.65], [0, 0, 0], 1],["../objects/boite/box2.urdf", [-1, 0, 0], [0, 0, 1.57], 1],
-["../objects/boite/boite.urdf", [1, 2, -0.5], [0, 0, 0], 1], ["../objects/boite/box3.urdf", [3, 0, 0.1], [0, 0, 0], 1],
-["../objects/decor/arbre/arbres.urdf", [-1, 6, 0.1], [1.57, 0, 0], 1], ["../objects/decor/mouton/mouton.urdf", [3, -2, 0], [0, 0, 1.57], 1],
-["../objects/decor/arbre/arbres.urdf", [-3, 0, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-5, 2, 0.1], [1.57, 0, 0], 1],
-["../objects/decor/arbre/arbres.urdf", [-3, 5, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-2, 4, 0.1], [1.57, 0, 0], 1],
-["../objects/decor/arbre/arbres.urdf", [-5, -1, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [3, 3, 0.1], [1.57, 0, 0], 1],
-["../objects/decor/banc/banc.urdf", [-8, -3, 0.1], [0, 0, 0], 1],["../objects/decor/banc/banc.urdf", [-6, -3, 0.1], [0, 0, 0], 1],["../objects/decor/banc/banc.urdf", [-4, -3, 0.1], [0, 0, 0], 1],
-["../objects/decor/banc/banc.urdf", [-2, -3, 0.1], [0, 0, 0], 1],
-["../objects/decor/banc/banc.urdf", [4, -3, 0.1], [0, 0, 0], 1],
-["../objects/decor/banc/banc.urdf", [5, -2, 0.1], [0, 0, 1.57], 1],["../objects/decor/banc/banc.urdf", [5, 0, 0.1], [0, 0, 1.57], 1],
-["../objects/decor/banc/banc.urdf", [5, 2, 0.1], [0, 0, 1.57], 1],["../objects/decor/banc/banc.urdf", [5, 4, 0.1], [0, 0, 1.57], 1],
-["../objects/decor/banc/banc.urdf", [5, 6, 0.1], [0, 0, 1.57], 1],["../objects/decor/banc/banc.urdf", [5, 8, 0.1], [0, 0, 1.57], 1]]
+["../objects/totem_banane.urdf", [1.18, -0.75, 0.65], [0, 0, 0], 1],
+["../objects/boite/box2.urdf", [-1, 0, 0], [0, 0, 1.57], 1], ["../objects/boite/boite.urdf", [1, 2, -0.5], [0, 0, 0], 1],
+["../objects/boite/box3.urdf", [3, 0, 0.1],[0, 0, 0], 1],
+["../objects/decor/arbre/arbres.urdf", [-1, 6, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-3, 0, 0.1], [1.57, 0, 0], 1],
+["../objects/decor/arbre/arbres.urdf", [-5, 2, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-3, 5, 0.1], [1.57, 0, 0], 1],
+["../objects/decor/arbre/arbres.urdf", [-2, 4, 0.1], [1.57, 0, 0], 1],["../objects/decor/arbre/arbres.urdf", [-5, -1, 0.1], [1.57, 0, 0], 1],
+["../objects/decor/arbre/arbres.urdf", [3, 3, 0.1], [1.57, 0, 0], 1],
+["../objects/decor/mouton/mouton.urdf", [3, -2, 0], [0, 0, 1.57], 1],
+["../objects/decor/banc/banc.urdf", [-8, -3, 0.1], [0, 0, 0], 1],["../objects/decor/banc/banc.urdf", [-6, -3, 0.1], [0, 0, 0], 1],
+["../objects/decor/banc/banc.urdf", [-4, -3, 0.1], [0, 0, 0], 1],["../objects/decor/banc/banc.urdf", [-2, -3, 0.1], [0, 0, 0], 1],
+["../objects/decor/banc/banc.urdf", [4, -3, 0.1], [0, 0, 0], 1],["../objects/decor/banc/banc.urdf", [5, -2, 0.1], [0, 0, 1.57], 1],
+["../objects/decor/banc/banc.urdf", [5, 0, 0.1], [0, 0, 1.57], 1],["../objects/decor/banc/banc.urdf", [5, 2, 0.1], [0, 0, 1.57], 1],
+["../objects/decor/banc/banc.urdf", [5, 4, 0.1], [0, 0, 1.57], 1],["../objects/decor/banc/banc.urdf", [5, 6, 0.1], [0, 0, 1.57], 1],
+["../objects/decor/banc/banc.urdf", [5, 8, 0.1], [0, 0, 1.57], 1]]
     
     for e in elements:
         pybullet.loadURDF(
