@@ -12,7 +12,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-		<mesh filename="osier.obj" scale=".03 .03 .03"/>
+		<mesh filename="osier.obj" scale=".02 .02 .02"/>
       </geometry>
        <material name="white">
         <color rgba="1 0.8 0.6 1"/>
@@ -21,7 +21,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-	 	<mesh filename="Boite3.obj" scale=".03 .03 .03"/>
+	 	<mesh filename="Boite3.obj" scale=".02 .02 .02"/>
       </geometry>
     </collision>
   </link>
