@@ -19,9 +19,9 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 -10"/>
+      <origin rpy="0 0 0" xyz="0 0 0.02"/>
       <geometry>
-	 	<box size="30 30 10"/>
+		<mesh filename="Barriere.obj" scale="0.01 0.01 0.01"/>
       </geometry>
     </collision>
   </link>
