@@ -94,7 +94,7 @@
     <collision>
       <origin rpy="1.57 0 0" xyz="0 0 0.1"/>
       <geometry>
-	 	<mesh filename="Totem_raquette/raquette.obj" scale=".008 .008 .008"/>
+	 	<mesh filename="Totem_raquette/raquette.obj" scale=".003 .003 .003"/>
       </geometry>
     </collision>
   </link>

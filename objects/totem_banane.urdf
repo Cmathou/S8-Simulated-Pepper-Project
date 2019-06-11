@@ -95,7 +95,7 @@
       </material>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 -1.57 -1.57" xyz="-0.02 0 0"/>
       <geometry>
 	 	<mesh filename="Totem_banane/banane.obj" scale=".02 .02 .02"/>
       </geometry>
