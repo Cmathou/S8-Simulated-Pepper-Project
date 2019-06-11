@@ -73,7 +73,7 @@
     <origin xyz="0 0 0.1"/>
   </joint>
 
-  <link name="raquette_stuff">
+  <link name="fourchette_stuff">
     <contact>
       <lateral_friction value="1.0"/>
       <rolling_friction value="0.0"/>
@@ -81,27 +81,30 @@
       <contact_erp value="1.0"/>
     </contact>
     <inertial>
-      <origin rpy="0 0 0" xyz="0.0 0 0.04"/>
+      <origin rpy="0 0 0" xyz="0.0 0.05 0.0"/>
        <mass value=".001"/>
        <inertia ixx="1e-9" ixy="0" ixz="0" iyy="1e-9" iyz="0" izz="1e-9"/>
     </inertial>
     <visual>
-      <origin rpy="1.57 0 0" xyz="0 0 0.1"/>
+      <origin rpy="0 0 1.57" xyz="0 0 0.05"/>
       <geometry>
-        <mesh filename="Totem_raquette/raquette.obj" scale=".003 .003 .003"/>
+        <mesh filename="Totem_incendie/BAI.obj" scale=".002 .002 .002"/>
       </geometry>
+      <material name="yellow">
+        <color rgba="1 0 0 1"/>
+      </material>
     </visual>
     <collision>
-      <origin rpy="1.57 0 0" xyz="0 0 0.1"/>
+      <origin rpy="0 0 1.57" xyz="0 0 0.05"/>
       <geometry>
-	 	<mesh filename="Totem_raquette/raquette.obj" scale=".003 .003 .003"/>
+	 	<mesh filename="Totem_incendie/BAI.obj" scale=".002 .002 .002"/>
       </geometry>
     </collision>
   </link>
 
     <joint name="jfixed_stuff" type="fixed">
     <parent link="top_cylinder"/>
-    <child link="raquette_stuff"/>
+    <child link="fourchette_stuff"/>
     <origin rpy="0 0 0" xyz="0 0 0.01"/>
   </joint>
 
