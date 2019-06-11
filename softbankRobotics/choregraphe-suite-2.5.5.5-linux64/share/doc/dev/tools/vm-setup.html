@@ -1,0 +1,636 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting up the NAOqi OS virtual machine &mdash; Aldebaran release-2.5.3-2016-11-18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     'release-2.5.3-2016-11-18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Aldebaran release-2.5.3-2016-11-18 documentation" href="../../index.html" />
+    <link rel="up" title="NAOqi OS on a Virtual Machine" href="index_vm.html" />
+    <link rel="next" title="Using the NAOqi OS in a virtual machine" href="vm-building-thirdparty.html" />
+    <link rel="prev" title="NAOqi OS on a virtual machine" href="vm-intro.html" />
+ 
+<script type="text/javascript" src="https://cloud.aldebaran-robotics.com/static/js/topbar.js"></script>
+<style>
+div#hd::after {
+  
+  
+  content: 'NAOqi 2.5';
+  
+  
+  
+  position: absolute;
+  margin-top: -54px;
+  right: -4px;
+  font-size: 125%;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  }
+</style>
+<script>
+
+$(window).ready(function () {
+
+    //Aldebaran Top bar
+     var barLinks = [];
+     barLinks.push({'name':'Aldebaran Site', 'url':'http://www.aldebaran-robotics.com', 'click':'', 'img':'https://cloud.aldebaran-robotics.com/static/img/aldeb.png'});
+     barLinks.push({'name':'Documentation', 'url':'../../index.html', 'click':"", 'img':''});
+     function ShowBar(name, email, usertype) {
+        var barParams = {
+            'name'    : name,
+            'email'   : email,
+            'usertype': usertype,
+            'loginfct': "FctLogin"
+        }
+        try { InitTopBar(barParams, barLinks); } catch (e) { console.log('Top Bar Init Failed'); }
+    }
+    ShowBar();
+
+    var width_label = 0;
+    $('dl.function-index dt > span').each(function () {
+        $(this).css('width', 'auto');
+        width_label = Math.max(width_label, $(this).width());
+    }).width(width_label + 30);
+    $('.sig-paren').width('auto');
+
+    // first level navigation
+
+    var buttonIds = [".naoqi", "pepper", "nao", "romeo"];
+    for(id in buttonIds){
+        $(id).removeClass("active");
+    }
+    //Aldebaran project
+    if ($('.toctree-l1.current a').text().indexOf("Romeo ")==0){
+        $(".romeo").toggleClass('active');
+    }
+    else if ($('.toctree-l1.current a').text().indexOf("Pepper ")==0){
+        $(".pepper").toggleClass('active');
+    }
+    else if ($('.toctree-l1.current a').text().indexOf("NAO ")==0){
+        $(".nao").toggleClass('active');
+    }
+    else if($('.toctree-l1.current a').text().indexOf("NAOqi ")==0){
+        $(".naoqi").toggleClass('active');
+    }
+
+    //qibuild project
+    if ($('.toctree-l1.current a').text().indexOf("Welcome to qiBuild documentation !")==0){
+        $(".beginner").toggleClass('active');
+    }
+    else if ($('.toctree-l1.current a').text().indexOf("Advanced qibuild usage")==0){
+        $(".advanced").toggleClass('active');
+    }
+    else if ($('.toctree-l1.current a').text().indexOf("Hacking qiBuild")==0){
+        $(".hacking").toggleClass('active');
+    }
+
+    // add "On this page", add cssClasses
+    if($('.yui-g .section h1').length > 0){
+        $('.yui-g .section h1:first').addClass("titleWrapper");
+        $('.yui-g .section h1:first').after($("#on-this-page").html())
+    }
+    else if($('.yui-g .section h2').length > 0){
+        $('.yui-g .section h2:first').addClass("titleWrapper");
+        $('.yui-g .section h2:first').after($("#on-this-page").html())
+    }
+    //remove first element on this page
+    if($("#on-this-page").length > 0){
+        var doms = $(".yui-g .section :first").nextUntil("#toc-list");
+        doms = doms.add($("#toc-list"));
+        doms.wrapAll('<div class="iNavWrapper"></div>');
+        $("#toc-list ul li a:first").remove()
+        $("#toc-list ul:first").replaceWith($("#toc-list ul li").html())
+    }
+    $("#toc-list").hide();
+    $("#otp-link").click(function(){
+        $("#toc-list").slideToggle();
+        if($("h2#otp-link").hasClass("change-before")){
+            $("h2#otp-link").removeClass("change-before")
+        }
+        else{
+            $("h2#otp-link").addClass("change-before")
+        }
+    });
+
+    if($("a.current.reference.internal").length>0){
+        var left = $("a.current.reference.internal").position().left-1;
+        var width = $("a.current.reference.internal").width();
+        var offset = 51;
+        var sidebarWidth = 339;
+        var right = sidebarWidth - (left + width + offset);
+        if($("a.current.reference.internal").height() <= 15){
+            $("a.current.reference.internal").css("white-space","nowrap");
+            $("a.current.reference.internal").css({"backgroundColor":"#0F2939","paddingTop":"2px", "paddingBottom":"2px","paddingLeft":left+"px","marginLeft":"-"+left+"px", "paddingRight":right+"px","marginRight":"-"+right+"px", "boxShadow":"0px 0px 1px rgb(15, 41, 57)"});
+        }
+        else{
+            $("a.current.reference.internal").css({"float":"right","backgroundColor":"#0F2939","paddingTop":"2px", "paddingBottom":"2px","paddingLeft":left+"px","marginLeft":"-"+left+"px", "paddingRight":right+"px","marginRight":"-"+right+"px", "boxShadow":"0px 0px 1px rgb(15, 41, 57)"});
+            left = $("a.current.reference.internal").position().left-1;
+            width = $("a.current.reference.internal").width();
+            right = sidebarWidth - (left + width + offset);
+            $("a.current.reference.internal").css({"float":"right","backgroundColor":"#0F2939","paddingTop":"2px", "paddingBottom":"2px","paddingLeft":left+"px","marginLeft":"-"+left+"px", "paddingRight":right+"px","marginRight":"-"+right+"px", "boxShadow":"0px 0px 1px rgb(15, 41, 57)"});
+        }
+        $("a.current.reference.internal").parent().css("list-style-type","none");
+    }
+
+    //back to top
+    var offset = 300,
+    //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
+    offset_opacity = 1200,
+    //duration of the top scrolling animation (in ms)
+    scroll_top_duration = 700;
+    //grab the "back to top" link
+    var back_to_top = $('.cd-top');
+
+    //hide or show the "back to top" link
+    $(window).scroll(function(){
+        //back to top button
+        ( $(this).scrollTop() > offset ) ? back_to_top.addClass('cd-is-visible') : back_to_top.removeClass('cd-is-visible cd-fade-out');
+        if( $(this).scrollTop() > offset_opacity ) {
+            back_to_top.addClass('cd-fade-out');
+        }
+    });
+
+    //smooth scroll to top
+    back_to_top.click(function(event){
+        event.preventDefault();
+        $('body,html').animate({
+            scrollTop: 0 ,
+        }, scroll_top_duration
+        );
+    });
+    //add show source button
+
+    //replace "go" with "search"
+    $("#searchbox form input[type=submit]").val("Search")
+
+    //trigger click on version triangle to jump to whats new
+    $("#hd").click(function(e){if(e.pageX >= this.offsetWidth && e.pageY<120){$(".whatsnew")[0].click()}})
+})
+
+</script>
+
+
+  </head>
+  <body role="document">
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t3">
+    <div id="hd">
+      
+      <h1><a href="../../index.html">SoftBank Robotics documentation</a>
+      
+      
+      <span><a class="whatsnew" href="../../news/index.html" >
+      
+          What's new in NAOqi 2.5?
+      
+      </a></span>
+      
+      </h1>
+      <div id="global-nav">
+        
+        <a class="naoqi" title="NAOqi Developer guide" href="../../index_dev_guide.html">NAOqi</a>
+        <a class="pepper" title="Pepper documentation" href="../../home_pepper.html">Pepper</a>
+        <a class="nao" title="NAO documentation" href="../../home_nao.html">NAO</a>
+        <a class="romeo" title="Romeo Documentation" href="../../home_romeo.html">Romeo</a>
+        
+        
+        
+        <div class="nav">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script></div>
+      </div>
+
+    </div>
+    <main class="cd-container">
+        <div id="bd">
+          <div id="yui-main">
+            <div class="yui-b">
+              <div class="yui-g" id="dev-tools-vm-setup">
+                
+  <div class="section" id="setting-up-the-naoqi-os-virtual-machine">
+<span id="vm-setup"></span><h1>Setting up the NAOqi OS virtual machine<a class="headerlink" href="#setting-up-the-naoqi-os-virtual-machine" title="Permalink to this headline">¶</a></h1>
+<p>This step-by-step tutorial has been done using <strong>VirtualBox</strong>.</p>
+<div class="section" id="getting-the-naoqi-os-virtual-machine">
+<h2>Getting the NAOqi OS virtual machine<a class="headerlink" href="#getting-the-naoqi-os-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<p>Retrieve the following file: <code class="docutils literal"><span class="pre">opennao-vm-&lt;VERSION&gt;.ova</span></code></p>
+<p>You can download the latest release from <strong>Aldebaran Community</strong> website.
+For further details, see: <a class="reference internal" href="../community_software.html#retrieving-software"><span>Downloading &amp; Installing Aldebaran Software</span></a>.</p>
+</div>
+<div class="section" id="importing-the-naoqi-os-virtual-machine-into-virtualbox">
+<h2>Importing the NAOqi OS virtual machine into VirtualBox<a class="headerlink" href="#importing-the-naoqi-os-virtual-machine-into-virtualbox" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prerequisite">
+<h3>Prerequisite<a class="headerlink" href="#prerequisite" title="Permalink to this headline">¶</a></h3>
+<p>Get <strong>VirtualBox</strong> on your development machine:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Linux</strong></td>
+<td>It should be available through the package manager
+of the installed distribution.</td>
+</tr>
+<tr class="row-even"><td><p class="first"><strong>Windows</strong></p>
+<p class="last"><strong>Mac OS</strong></p>
+</td>
+<td><ol class="first last arabic simple">
+<li>Download it from the Oracle website:
+<a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></li>
+<li>Install <strong>VirtualBox</strong>.</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="setting-up-the-naoqi-os-virtual-machine-in-virtualbox">
+<h3>Setting up the NAOqi OS virtual machine in VirtualBox<a class="headerlink" href="#setting-up-the-naoqi-os-virtual-machine-in-virtualbox" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="94%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Step</th>
+<th class="head">Action</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li></li>
+</ol>
+</td>
+<td><p class="first">Start <strong>VirtualBox</strong>.</p>
+<a class="reference internal image-reference" href="../../_images/01.png"><img alt="../../_images/01.png" src="../../_images/01.png" style="width: 477px; height: 308px;" /></a>
+<p class="last"><em>If you launch a newly installed VirtualBox, then there is no existing
+virtual machine in the left column.</em></p>
+</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p class="first">Choose <strong>File</strong> &gt; <strong>Import Appliance</strong>.</p>
+<p>The following window is displayed:</p>
+<a class="last reference internal image-reference" href="../../_images/03.png"><img alt="../../_images/03.png" src="../../_images/03.png" style="width: 454px; height: 357px;" /></a>
+</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple" start="3">
+<li></li>
+</ol>
+</td>
+<td><p class="first">Browse and open the <code class="docutils literal"><span class="pre">*.ova</span></code> file:</p>
+<a class="reference internal image-reference" href="../../_images/04.png"><img alt="../../_images/04.png" src="../../_images/04.png" style="width: 429px; height: 324px;" /></a>
+<p>The details of the imported virtual machine will be displayed.</p>
+<a class="last reference internal image-reference" href="../../_images/05.png"><img alt="../../_images/05.png" src="../../_images/05.png" style="width: 455px; height: 356px;" /></a>
+</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple" start="4">
+<li></li>
+</ol>
+</td>
+<td><p class="first">Click the <strong>Import</strong> button to start the importation.</p>
+<p>This may take few minutes, be patient:</p>
+<a class="reference internal image-reference" href="../../_images/06.png"><img alt="../../_images/06.png" src="../../_images/06.png" style="width: 449px; height: 96px;" /></a>
+<p>Congratulations! The <strong>NAOqi OS</strong> virtual machine was successfully
+imported.</p>
+<a class="last reference internal image-reference" href="../../_images/08.png"><img alt="../../_images/08.png" src="../../_images/08.png" style="width: 477px; height: 305px;" /></a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="using-the-naoqi-os-virtual-machine">
+<span id="vm-using"></span><h2>Using the NAOqi OS virtual machine<a class="headerlink" href="#using-the-naoqi-os-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="launching-the-naoqi-os-virtual-machine">
+<h3>Launching the NAOqi OS virtual machine<a class="headerlink" href="#launching-the-naoqi-os-virtual-machine" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="94%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Step</th>
+<th class="head">Action</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li></li>
+</ol>
+</td>
+<td><p class="first">In <strong>VirtualBox</strong>, select the <strong>NAOqi OS</strong> virtual machine,
+then click the <strong>Start</strong> button.</p>
+<p>It is launched in its own window:</p>
+<a class="last reference internal image-reference" href="../../_images/12.png"><img alt="../../_images/12.png" src="../../_images/12.png" style="width: 569px; height: 356px;" /></a>
+</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple" start="2">
+<li></li>
+</ol>
+</td>
+<td><p class="first">Here, you are in a console.</p>
+<p class="last">Refer to  <a class="reference internal" href="opennao.html#opennao-user-account"><span>NAOqi OS - user accounts</span></a> for logins and passwords.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="accessing-the-naoqi-os-virtual-machine-through-ssh">
+<span id="vm-accessing"></span><h3>Accessing the NAOqi OS virtual machine through ssh<a class="headerlink" href="#accessing-the-naoqi-os-virtual-machine-through-ssh" title="Permalink to this headline">¶</a></h3>
+<p>By default, the host port <code class="docutils literal"><span class="pre">2222</span></code> is forwarded on the ssh port (<code class="docutils literal"><span class="pre">22</span></code>) of the
+<strong>NAOqi OS</strong> virtual machine.</p>
+<p>Thus, after launching the <strong>NAOqi OS</strong> virtual machine, one can easily log in over
+ssh:</p>
+<ul>
+<li><p class="first">From a Linux terminal:</p>
+<a class="reference internal image-reference" href="../../_images/13.png"><img alt="../../_images/13.png" src="../../_images/13.png" style="width: 579px; height: 139px;" /></a>
+</li>
+<li><p class="first">From <strong>PuTTy</strong>:</p>
+<a class="reference internal image-reference" href="../../_images/14.png"><img alt="../../_images/14.png" src="../../_images/14.png" style="width: 478px; height: 476px;" /></a>
+</li>
+</ul>
+<p>Refer to <a class="reference internal" href="opennao.html#opennao-user-account"><span>NAOqi OS - user accounts</span></a> section for
+logins and passwords.</p>
+</div>
+<div class="section" id="exchanging-data-between-the-host-and-the-naoqi-os-virtual-machine">
+<span id="vm-exchanging-file"></span><h3>Exchanging data between the host and the <strong>NAOqi OS</strong> virtual machine<a class="headerlink" href="#exchanging-data-between-the-host-and-the-naoqi-os-virtual-machine" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This problem is only addressed using command line tools.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">All the following commands are run on the host system.</p>
+</div>
+<div class="section" id="using-a-linux-or-mac-os-host">
+<h4>Using a Linux or Mac OS host<a class="headerlink" href="#using-a-linux-or-mac-os-host" title="Permalink to this headline">¶</a></h4>
+<p>On UNIX hosts, use <code class="docutils literal"><span class="pre">scp</span></code>.</p>
+<p>Sending data from the host to the <strong>NAOqi OS</strong> virtual machine:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">scp -P 2222 &lt;source path on the host&gt; nao@localhost:&lt;destination path inside the virtual machine&gt;</span>
+</pre></div>
+</div>
+<p>Retrieving data from the <strong>NAOqi OS</strong> virtual machine on the host:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">scp -P 2222 nao@localhost:&lt;source path inside the virtual machine&gt; &lt;destination path on the host&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-a-windows-host">
+<h4>Using a Windows host<a class="headerlink" href="#using-a-windows-host" title="Permalink to this headline">¶</a></h4>
+<p>On Windows hosts, use <code class="docutils literal"><span class="pre">pscp</span></code>, a command line tool, provided within <strong>Putty</strong>.</p>
+<div class="section" id="id1">
+<h5><strong>Prerequisite</strong><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h5>
+<p>Locate the <em>Putty</em> installation directory, assuming it is installed in
+<code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\Putty</span></code></p>
+<p>Start a command window and go to the <em>Putty</em> installation directory:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">cd &quot;C:\Program Files\Putty&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sending-data-from-the-host-to-the-naoqi-os-virtual-machine">
+<h5><strong>Sending data from the host to the NAOqi OS virtual machine</strong><a class="headerlink" href="#sending-data-from-the-host-to-the-naoqi-os-virtual-machine" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">pscp -P 2222 source &lt;source path on the host&gt; nao@localhost:&lt;destination path inside the virtual machine&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="retrieving-data-from-the-naoqi-os-virtual-machine-on-the-host">
+<h5><strong>Retrieving data from the NAOqi OS virtual machine on the host</strong><a class="headerlink" href="#retrieving-data-from-the-naoqi-os-virtual-machine-on-the-host" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">pscp -P 2222 nao@localhost:&lt;source path inside the virtual machine&gt; &lt;destination path on the hos</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tweaking-the-naoqi-os-virtual-machine-configuration">
+<h2>Tweaking the NAOqi OS virtual machine configuration<a class="headerlink" href="#tweaking-the-naoqi-os-virtual-machine-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>The <strong>NAOqi OS</strong> virtual machine system does <strong>not</strong> currently <strong>include CDrom</strong>
+support.</p>
+<p class="last">Thus, installing <em>guest additions</em> is not possible.</p>
+</div>
+<div class="section" id="changing-the-network-configuration">
+<span id="vm-changing-network-config"></span><h3>Changing the network configuration<a class="headerlink" href="#changing-the-network-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="nat-configuration">
+<h4>NAT configuration<a class="headerlink" href="#nat-configuration" title="Permalink to this headline">¶</a></h4>
+<p>By default, the <strong>NAOqi OS</strong> virtual machine network configuration uses
+<a class="reference external" href="http://en.wikipedia.org/wiki/Network_address_translation">NAT</a>.</p>
+<p>Using this the <strong>NAOqi OS</strong> virtual machine is reachable, without any knowledge
+about its network settings, just logging on <code class="docutils literal"><span class="pre">localhost</span></code> (see
+<a class="reference internal" href="#vm-accessing"><span>Accessing the NAOqi OS virtual machine through ssh</span></a>).</p>
+<div class="section" id="port-forwarding">
+<h5><strong>Port forwarding</strong><a class="headerlink" href="#port-forwarding" title="Permalink to this headline">¶</a></h5>
+<p>The port forwarding settings are available under the menu
+<strong>Machine</strong> &gt; <strong>Settings</strong>, then select the <strong>Network</strong> section (or just click
+<strong>Network</strong> on the right column after selecting the right virtual machine).</p>
+<p>Expand the advanced features by clicking on <code class="docutils literal"><span class="pre">Advanced</span></code>:</p>
+<a class="reference internal image-reference" href="../../_images/09.png"><img alt="../../_images/09.png" src="../../_images/09.png" style="width: 538px; height: 473px;" /></a>
+<p>Open the port forwarding table:</p>
+<a class="reference internal image-reference" href="../../_images/10.png"><img alt="../../_images/10.png" src="../../_images/10.png" style="width: 486px; height: 249px;" /></a>
+<p>From here you can set any redirection you want.</p>
+</div>
+<div class="section" id="setting-sub-network">
+<h5><strong>Setting sub-network</strong><a class="headerlink" href="#setting-sub-network" title="Permalink to this headline">¶</a></h5>
+<p>It may be necessary to change the default sub-network on which the OpenNAO
+virtual machine is connected.</p>
+<p>To make this change, there is no other way but command line:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">VBoxManage modifyvm &lt;virtual machine name&gt; --natnet1 &quot;&lt;network&gt;/&lt;netmask length&gt;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This command line must be run when the <strong>NAOqi OS</strong> virtual machine is not running.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">VBoxManage modifyvm opennao-vm --natnet1 &quot;192.168.10.0/24&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="bridge-configuration">
+<h4>Bridge configuration<a class="headerlink" href="#bridge-configuration" title="Permalink to this headline">¶</a></h4>
+<p>If you prefer the <strong>NAOqi OS</strong> virtual machine has its own IP address on the same
+sub-network as the host is, then you migth be interested by using the
+<em>bridge network configuration</em>.</p>
+<p>To do so, just select <em>Bridged Adapter</em> in the <em>Network</em> configuration window:</p>
+<a class="reference internal image-reference" href="../../_images/15.png"><img alt="../../_images/15.png" src="../../_images/15.png" style="width: 538px; height: 473px;" /></a>
+<p>Then, the easiest way to know the IP address of the <strong>NAOqi OS</strong> virtual machine is:</p>
+<ol class="arabic">
+<li><p class="first">Start the <strong>NAOqi OS</strong> virtual machine;</p>
+</li>
+<li><p class="first">Logging on the <strong>NAOqi OS</strong> virtual machine through the console;</p>
+</li>
+<li><p class="first">Run the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">ifconfig eth0</span>
+</pre></div>
+</div>
+<p>In the following example, the IP address of the <strong>NAOqi OS</strong> virtual machine is:
+<code class="docutils literal"><span class="pre">10.0.253.196</span></code>.</p>
+<a class="reference internal image-reference" href="../../_images/16.png"><img alt="../../_images/16.png" src="../../_images/16.png" style="width: 569px; height: 356px;" /></a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          
+            
+              <div class="yui-b" id="sidebar">
+                
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents.html">Site map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../news/index.html">What’s new</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index_dev_guide.html">NAOqi - Developer guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started/index.html">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting_started/creating_applications/index.html">Creating an application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ref/life/index.html">Programming for a living robot</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../getting_started/index_tuto.html">Other tutorials</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../software/choregraphe/tutos/index.html">Choregraphe - Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../embedded/embedded_index.html">Working with NAOqi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robot-simulation.html">Working with a simulated robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/tutorials.html">Python SDK - Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cpp/tutorials.html">C++ SDK - Tutorials</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index_vm.html">NAOqi OS on a Virtual Machine</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="vm-intro.html">NAOqi OS on a virtual machine</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="">Setting up the NAOqi OS virtual machine</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="vm-building-thirdparty.html">Using the NAOqi OS in a virtual machine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="developing-using-thirdparty.html">Developing a project for NAO using third-party software</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../software/choregraphe/index.html">Choregraphe Suite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../programming_index.html">SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../naoqi/index.html">NAOqi APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../libqi/index.html">qi Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ref/index.html">Former NAOqi Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../simulators/simulator_index.html">Simulators</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../home_nao.html"><strong>NAO</strong> - Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../home_pepper.html"><strong>Pepper</strong> - Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../home_romeo.html"><strong>Romeo</strong> - Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../legal/notice.html">Legal notices</a></li>
+</ul>
+
+    <div id="on-this-page" style="display:none;">
+        <h2 id="otp-link">On this page</h2>
+        <div id="toc-list">
+            <ul>
+<li><a class="reference internal" href="#">Setting up the NAOqi OS virtual machine</a><ul>
+<li><a class="reference internal" href="#getting-the-naoqi-os-virtual-machine">Getting the NAOqi OS virtual machine</a></li>
+<li><a class="reference internal" href="#importing-the-naoqi-os-virtual-machine-into-virtualbox">Importing the NAOqi OS virtual machine into VirtualBox</a><ul>
+<li><a class="reference internal" href="#prerequisite">Prerequisite</a></li>
+<li><a class="reference internal" href="#setting-up-the-naoqi-os-virtual-machine-in-virtualbox">Setting up the NAOqi OS virtual machine in VirtualBox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-the-naoqi-os-virtual-machine">Using the NAOqi OS virtual machine</a><ul>
+<li><a class="reference internal" href="#launching-the-naoqi-os-virtual-machine">Launching the NAOqi OS virtual machine</a></li>
+<li><a class="reference internal" href="#accessing-the-naoqi-os-virtual-machine-through-ssh">Accessing the NAOqi OS virtual machine through ssh</a></li>
+<li><a class="reference internal" href="#exchanging-data-between-the-host-and-the-naoqi-os-virtual-machine">Exchanging data between the host and the <strong>NAOqi OS</strong> virtual machine</a><ul>
+<li><a class="reference internal" href="#using-a-linux-or-mac-os-host">Using a Linux or Mac OS host</a></li>
+<li><a class="reference internal" href="#using-a-windows-host">Using a Windows host</a><ul>
+<li><a class="reference internal" href="#id1"><strong>Prerequisite</strong></a></li>
+<li><a class="reference internal" href="#sending-data-from-the-host-to-the-naoqi-os-virtual-machine"><strong>Sending data from the host to the NAOqi OS virtual machine</strong></a></li>
+<li><a class="reference internal" href="#retrieving-data-from-the-naoqi-os-virtual-machine-on-the-host"><strong>Retrieving data from the NAOqi OS virtual machine on the host</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tweaking-the-naoqi-os-virtual-machine-configuration">Tweaking the NAOqi OS virtual machine configuration</a><ul>
+<li><a class="reference internal" href="#changing-the-network-configuration">Changing the network configuration</a><ul>
+<li><a class="reference internal" href="#nat-configuration">NAT configuration</a><ul>
+<li><a class="reference internal" href="#port-forwarding"><strong>Port forwarding</strong></a></li>
+<li><a class="reference internal" href="#setting-sub-network"><strong>Setting sub-network</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bridge-configuration">Bridge configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+        </div>
+      </div>
+              </div>
+            
+          
+        </div>
+    </main>
+    <a href="#0" class="cd-top"></a>
+    <div id="ft">
+      
+      <a title="Glossary" href="../../glossary.html">Glossary</a>
+      <a title="Site map" href="../../contents.html">Site map</a>
+      <a title="Index" href="../../genindex.html">Index</a>
+      <a title="Support" target="_blank" href="https://account.aldebaran.com/support/">Support</a>
+      <a title="Contact" target="_blank" href="https://www.aldebaran.com/en/contact">Contact</a>
+      <a title="Legal Notices" href="../../legal/notice.html">Legal Notices</a>
+      
+      
+      <img src="https://www.ald.softbankrobotics.com/sites/aldebaran/files/logos-picture/2016_digital_logo_sbr_112x31_0.png" alt="">
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

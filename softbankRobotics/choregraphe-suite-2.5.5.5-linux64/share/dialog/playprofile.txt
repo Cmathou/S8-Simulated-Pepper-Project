@@ -1,0 +1,2 @@
+
+/home/opennao/work/release-2.5.3/apps/dialog-data/build-release-2.5.3_linux64_all/test/../sdk/bin/test_playProfile

@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Naoqi Tablet Simulator</title>
+
+	<link rel="stylesheet" type="text/css" href="tablet.css">
+	<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+</head>
+
+	<body>
+	    <h1>Naoqi Tablet Simulator</h1>
+		<!-- Status placed here to be more visible -->
+		<div id="connection-status" class="orange">Waiting</div>
+
+		<h2>Tablet screen</h2>
+		<div id="tablet-main">
+
+			<img id="tablet-image" hidden></img>
+			<video id="tablet-video" hidden></video>
+			<iframe id="tablet-webview-iframe"></iframe>
+				
+		</div>
+
+		<div id="control-panel">
+			<h2>Control Panel</h2>
+			<div>
+				<h3>Connection to tablet server</h3>
+					<label for="host">Host :</label>
+					<input id="host" name="host" type="text" />
+					<label for="port">Port : </label>
+					<input id="port" name="port" type="number" />
+					<button id="connect" type="submit" name="connect">Connection</button>
+					<button id="default-connection-settings" type="submit" name="default-connection-settings">Default values</button>
+					<h3>Settings</h3>
+					<input id="cb-debug" name="cb-debug" type="checkbox" checked/>
+					<label for="cb-debug">Debug mode</label>
+			</div>
+			<div>
+				<h3>Tablet model</h3>
+				<label for="screen-size">Screen size</label>
+				<select id="select-screen-size" name="screen-size">
+					<option value="1280">1280*800</option>
+					<option value="1708">1708*1067</option>
+				</select>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="nts_client.js"></script>
+
+	</body>
+</html>
